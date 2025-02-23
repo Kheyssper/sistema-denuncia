@@ -1,0 +1,165 @@
+/* src/pages/Configuracoes/styles.module.css */
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  /* UserList Styles */
+  .userListContainer {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .userListHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .addButton {
+    background: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .addButton:hover {
+    background: #2563eb;
+  }
+  
+  .userTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .userTable th, .userTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .userTable th {
+    color: #64748b;
+    font-weight: 500;
+  }
+  
+  .statusBadge {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 12px;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .actionButton {
+    padding: 6px;
+    border: none;
+    border-radius: 6px;
+    background: #f1f5f9;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .deleteButton:hover {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+  
+  /* Settings Styles */
+  .settingsGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+  }
+  
+  .settingsContainer {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .settingsForm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .formGroup label {
+    color: #64748b;
+    font-size: 14px;
+  }
+  
+  .formGroup input {
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+  }
+  
+  .saveButton {
+    background: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+  
+  /* Logs Styles */
+  .logsContainer {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .logsList {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .logItem {
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .logDate {
+    font-size: 12px;
+    color: #64748b;
+  }
+  
+  .logUser {
+    font-weight: 500;
+    color: #3b82f6;
+  }
+  
+  .logAction {
+    color: #1e293b;
+  }

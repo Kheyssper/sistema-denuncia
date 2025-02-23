@@ -1,0 +1,88 @@
+/* src/pages/DenunciaDetalhe/styles.module.css */
+.container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .header {
+    padding: 24px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header h1 {
+    font-size: 24px;
+    color: #1e293b;
+  }
+  
+  .date {
+    color: #64748b;
+  }
+  
+  .content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    padding: 24px;
+  }
+  
+  .infoCard {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  
+  .infoCard h3 {
+    color: #1e293b;
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  
+  .infoGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .infoGrid label {
+    color: #64748b;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .timelineItem {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .timelineContent {
+    border-left: 2px solid #e2e8f0;
+    padding-left: 12px;
+    padding-bottom: 16px;
+  }
+  
+  .timelineDate {
+    font-size: 12px;
+    color: #64748b;
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .timelineUser {
+    font-size: 12px;
+    color: #3b82f6;
+    display: block;
+    margin-top: 4px;
+  }

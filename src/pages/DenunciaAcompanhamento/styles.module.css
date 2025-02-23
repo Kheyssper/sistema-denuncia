@@ -1,0 +1,185 @@
+/* src/pages/DenunciaAcompanhamento/styles.module.css */
+.container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .header {
+    padding: 24px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header h1 {
+    font-size: 24px;
+    color: #1e293b;
+    margin-bottom: 4px;
+  }
+  
+  .date {
+    color: #64748b;
+    font-size: 14px;
+  }
+  
+  .statusBadge {
+    background: #f1f5f9;
+    color: #1e293b;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  
+  .content {
+    padding: 24px;
+  }
+  
+  .mainSection {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .infoCard {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  
+  .infoHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    color: #1e293b;
+  }
+  
+  .infoRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .priority {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .alta { background: #fee2e2; color: #dc2626; }
+  .media { background: #fef9c3; color: #ca8a04; }
+  .baixa { background: #dcfce7; color: #16a34a; }
+  
+  .timeline {
+    margin: 32px 0;
+  }
+  
+  .timeline h3 {
+    margin-bottom: 24px;
+    color: #1e293b;
+    font-size: 18px;
+  }
+  
+  .timelineItem {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  
+  .timelineDot {
+    background: #e2e8f0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .timelineContent {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 16px;
+    flex: 1;
+  }
+  
+  .timelineHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  
+  .timelineDate {
+    color: #64748b;
+    font-size: 14px;
+  }
+  
+  .timelineStatus {
+    color: #3b82f6;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  
+  .profissionalInfo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .profissionalTipo {
+    color: #64748b;
+    font-size: 14px;
+    padding: 2px 8px;
+    background: #e2e8f0;
+    border-radius: 12px;
+  }
+  
+  .timelineText {
+    color: #1e293b;
+    line-height: 1.5;
+  }
+  
+  .commentBox {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  
+  .commentBox h3 {
+    margin-bottom: 16px;
+    color: #1e293b;
+  }
+  
+  .commentInput {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+  
+  .sendButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #3b82f6;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .sendButton:hover {
+    background: #2563eb;
+  }

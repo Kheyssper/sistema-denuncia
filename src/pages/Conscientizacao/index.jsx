@@ -54,7 +54,7 @@ const Conscientizacao = () => {
 
   useEffect(() => {
     const loadRecursos = async () => {
-      const data = await api.getConscientizacao();
+      const data = await getConscientizacao();
       setRecursos(data);
     };
     loadRecursos();

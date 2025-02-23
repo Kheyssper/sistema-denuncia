@@ -18,6 +18,7 @@ function App() {
       <Route path="/" element={<PrivateRoute><RootLayout /></PrivateRoute>}>
         <Route index element={<Dashboard />} />
         <Route path="denuncias" element={<ListaDenuncias />} />
+        <Route path="denuncias/:id" element={<DenunciaDetalhe />} />
         <Route path="denuncias/:id/acompanhamento" element={<DenunciaAcompanhamento />} />
         <Route path="conscientizacao" element={<Conscientizacao />} />
         <Route path="configuracoes" element={<Configuracoes />} />

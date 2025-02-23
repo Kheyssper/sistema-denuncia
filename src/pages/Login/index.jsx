@@ -20,13 +20,19 @@ const Login = () => {
         email: formData.email,
         password: formData.password
       });
-      
+
+      // Salvar dados do usuário
       localStorage.setItem('token', response.token);
       localStorage.setItem('user', JSON.stringify(response.user));
+
+      // Redirecionar para o dashboard
       navigate('/');
+
+      // Log para debug
+      console.log('Login bem sucedido, redirecionando...');
     } catch (error) {
       setError('Email ou senha inválidos');
-      console.error('Erro no login:', error); // Adicione esta linha para logar o erro no console
+      console.error('Erro no login:', error);
     }
   };
 

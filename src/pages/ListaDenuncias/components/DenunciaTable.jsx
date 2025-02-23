@@ -1,6 +1,7 @@
 import styles from '../styles.module.css'
 import StatusBadge from './StatusBadge'
 import { Eye, Trash2, ClipboardCheck } from 'lucide-react'
+import { format, parseISO } from 'date-fns'
 
 const DenunciaTable = ({ denuncias, onView, onDelete, onAcompanhar }) => {
   return (
@@ -20,7 +21,9 @@ const DenunciaTable = ({ denuncias, onView, onDelete, onAcompanhar }) => {
           {denuncias.map(denuncia => (
             <tr key={denuncia.id}>
               <td>#{denuncia.id}</td>
-              <td>{new Date(denuncia.data).toLocaleDateString()}</td>
+              <td>
+                {denuncia.data ? format(parseISO(denuncia.data), 'dd/MM/yyyy') : 'Data inválida'}
+              </td>
               <td><StatusBadge status={denuncia.status} /></td>
               <td>
                 <span className={`${styles.prioridade} ${styles[denuncia.prioridade]}`}>

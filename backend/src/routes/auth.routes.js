@@ -1,21 +1,56 @@
-const express = require('express');
-const router = express.Router();
-const jwt = require('jsonwebtoken');
+// src/controllers/authController.js
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const pool = require('../config/database');
 
-// Defina suas rotas aqui
-router.post('/login', async (req, res) => {
+const login = async (req, res) => {
   try {
-    const [user] = await pool.query('SELECT * FROM users WHERE email = ?', [req.body.email]);
-    if (!user[0] || !bcrypt.compareSync(req.body.password, user[0].password)) {
-      return res.status(401).json({ message: 'Credenciais inválidas' });
+    const { email, password } = req.body;
+
+    // Buscar usuário do banco
+    const [users] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+    const user = users[0];
+
+    if (!user) {
+      return res.status(401).json({ message: 'Email ou senha inválidos' });
     }
-    const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET);
-    res.json({ token, user: user[0] });
+
+    // Comparar senha com hash
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Email ou senha inválidos' });
+    }
+
+    // Gerar token
+    const token = jwt.sign(
+      { id: user.id, tipo: user.tipo },
+      process.env.JWT_SECRET || 'suachavesecreta123'
+    );
+
+    // Retornar resposta
+    res.json({
+      token,
+      user: {
+        id: user.id,
+        nome: user.nome,
+        email: user.email,
+        tipo: user.tipo
+      }
+    });
+
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Erro no login:', error);
+    res.status(500).json({ message: 'Erro interno do servidor' });
   }
-});
+};
+
+module.exports = { login };
+
+// src/routes/auth.routes.js
+const router = require('express').Router();
+const authController = require('../controllers/authController');
+
+router.post('/login', authController.login);
 
 module.exports = router;

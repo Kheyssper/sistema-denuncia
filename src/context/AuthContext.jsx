@@ -1,40 +1,32 @@
-// src/contexts/AuthContext.js
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-    const login = (userData) => {
-        setUser(userData);
-    };
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
 
-    const logout = () => {
-        setUser(null);
-    };
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+  };
 
-    const checkAuth = useCallback(async () => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            try {
-                const user = await api.validateToken(token);
-                setUser(user);
-            } catch {
-                localStorage.removeItem('token');
-            }
-        }
-    }, []);
-
-    useEffect(() => { checkAuth(); }, []);
-
-    return (
-        <AuthContext.Provider value={{ user, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider value={{ user, setUser, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {
-    return useContext(AuthContext);
+  return useContext(AuthContext);
 };
+
+export { AuthContext };

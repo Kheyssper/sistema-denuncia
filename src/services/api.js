@@ -42,8 +42,9 @@ export const addAcompanhamento = async (id, comentario) => {
 };
 
 export const getConscientizacao = async () => {
-  const { data } = await api.get('/conscientizacao');
-  return data;
+  const response = await api.get('/conscientizacao');
+  console.log('Dados de conscientização:', response.data);
+  return response.data;
 };
 
 // Adicionando a função getDenunciasPorTipo
@@ -96,6 +97,26 @@ export const deleteUser = async (id) => {
   return response.data;
 };
 
+export const addRecurso = async (recurso) => {
+  console.log('Dados do recurso a serem adicionados:', recurso);
+  const response = await api.post('/conscientizacao', recurso);
+  console.log('Recurso adicionado:', response.data);
+  return response.data;
+};
+
+export const updateRecurso = async (id, recurso) => {
+  console.log('Dados do recurso a serem atualizados:', recurso);
+  const response = await api.put(`/conscientizacao/${id}`, recurso);
+  console.log('Recurso atualizado:', response.data);
+  return response.data;
+};
+
+export const deleteRecurso = async (id) => {
+  const response = await api.delete(`/conscientizacao/${id}`);
+  console.log('Recurso deletado:', response.data);
+  return response.data;
+};
+
 // Interceptor para adicionar token em todas as requisições
 api.interceptors.request.use(
   config => {
@@ -131,5 +152,9 @@ export default {
   getLogs,
   addUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  getConscientizacao,
+  addRecurso,
+  updateRecurso,
+  deleteRecurso
 };

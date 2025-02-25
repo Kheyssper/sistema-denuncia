@@ -21,9 +21,15 @@ const ListaDenuncias = () => {
     navigate(`/denuncias/${id}`);
   };
 
-  const handleDelete = (id) => {
-    // Implementar lógica de soft delete
-    console.log('Delete:', id);
+  const handleDelete = async (id) => {
+    try {
+      console.log(`Delete: ${id}`);
+      await api.deleteDenuncia(id);
+      console.log('Denúncia deletada com sucesso');
+      recarregar();
+    } catch (error) {
+      console.error('Erro ao deletar a denúncia:', error);
+    }
   };
 
   const handleAcompanhar = (id) => {

@@ -1,26 +1,33 @@
 // src/pages/Configuracoes/components/Logs.jsx
-import styles from '../styles.module.css'
+import { useState, useEffect } from 'react';
+import api from '../../../services/api';
+import styles from '../styles.module.css';
 
 const Logs = () => {
-  const logs = [
-    { id: 1, data: '23/02/2024 15:30', usuario: 'Dr. Silva', acao: 'Login no sistema' },
-    { id: 2, data: '23/02/2024 15:45', usuario: 'Dr. Silva', acao: 'Visualizou denúncia #123' }
-  ]
+  const [logs, setLogs] = useState([]);
+
+  useEffect(() => {
+    const loadLogs = async () => {
+      try {
+        const data = await api.getLogs();
+        setLogs(data);
+      } catch (error) {
+        console.error('Erro ao carregar os logs:', error);
+      }
+    };
+    loadLogs();
+  }, []);
 
   return (
-    <div className={styles.logsContainer}>
+    <div className={styles.logs}>
       <h2>Logs do Sistema</h2>
-      <div className={styles.logsList}>
+      <ul>
         {logs.map(log => (
-          <div key={log.id} className={styles.logItem}>
-            <span className={styles.logDate}>{log.data}</span>
-            <span className={styles.logUser}>{log.usuario}</span>
-            <span className={styles.logAction}>{log.acao}</span>
-          </div>
+          <li key={log.id}>{log.message}</li>
         ))}
-      </div>
+      </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Logs
+export default Logs;

@@ -51,4 +51,5 @@ const DenunciaTable = ({ denuncias, onView, onDelete, onAcompanhar }) => {
     </div>
   )
 }
-export default DenunciaTable;
+
+export default DenunciaTable

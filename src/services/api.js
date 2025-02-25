@@ -29,13 +29,16 @@ export const getDenuncias = async () => {
 };
 
 export const getDenunciaById = async (id) => {
-  const { data } = await api.get(`/denuncias/${id}`);
-  return data;
+  const response = await api.get(`/denuncias/${id}`);
+  console.log('Resposta completa do backend:', response);
+  console.log('Dados da denúncia:', response.data);
+  return response.data;
 };
 
 export const addAcompanhamento = async (id, comentario) => {
-  const { data } = await api.post(`/denuncias/${id}/acompanhar`, { comentario });
-  return data;
+  const response = await api.post(`/denuncias/${id}/acompanhar`, { comentario });
+  console.log('Resposta do backend ao adicionar acompanhamento:', response.data);
+  return response.data;
 };
 
 export const getConscientizacao = async () => {
@@ -47,6 +50,50 @@ export const getConscientizacao = async () => {
 export const getDenunciasPorTipo = async (tipo) => {
   const { data } = await api.get(`/denuncias/tipo/${tipo}`);
   return data;
+};
+
+export const deleteDenuncia = async (id) => {
+  const response = await api.delete(`/denuncias/${id}`);
+  console.log('Resposta do backend ao deletar denúncia:', response.data);
+  return response.data;
+};
+
+export const getUsers = async () => {
+  const response = await api.get('/users');
+  console.log('Dados dos usuários:', response.data);
+  return response.data;
+};
+
+export const getSystemSettings = async () => {
+  const response = await api.get('/system-settings');
+  console.log('Configurações do sistema:', response.data);
+  return response.data;
+};
+
+export const getLogs = async () => {
+  const response = await api.get('/logs');
+  console.log('Logs do sistema:', response.data);
+  return response.data;
+};
+
+export const addUser = async (user) => {
+  console.log('Dados do usuário recebidos no backend:', user);
+  const response = await api.post('/users', user);
+  console.log('Usuário adicionado:', response.data);
+  return response.data;
+};
+
+export const updateUser = async (id, user) => {
+  console.log('Dados do usuário a serem atualizados:', user);
+  const response = await api.put(`/users/${id}`, user);
+  console.log('Usuário atualizado:', response.data);
+  return response.data;
+};
+
+export const deleteUser = async (id) => {
+  const response = await api.delete(`/users/${id}`);
+  console.log('Usuário deletado:', response.data);
+  return response.data;
 };
 
 // Interceptor para adicionar token em todas as requisições
@@ -75,4 +122,14 @@ api.interceptors.response.use(
     }
   );
   
-export default api;
+export default {
+  getDenunciaById,
+  addAcompanhamento,
+  deleteDenuncia,
+  getUsers,
+  getSystemSettings,
+  getLogs,
+  addUser,
+  updateUser,
+  deleteUser
+};

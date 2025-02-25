@@ -1,46 +1,57 @@
 // src/pages/DenunciaAcompanhamento/index.jsx
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { Clock, Send, User, AlertTriangle } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { Clock, Send, User, AlertTriangle, Trash2 } from 'lucide-react'
 import styles from './styles.module.css'
+import { getDenunciaById, addAcompanhamento, deleteDenuncia } from '../../services/api'
 
 const DenunciaAcompanhamento = () => {
   const { id } = useParams()
+  const navigate = useNavigate()
+  const [denuncia, setDenuncia] = useState(null)
   const [novoComentario, setNovoComentario] = useState('')
 
   useEffect(() => {
     const loadDenuncia = async () => {
-      const data = await getDenunciaById(id);
-      setDenuncia(data);
-    };
-    loadDenuncia();
-  }, [id]);
-
-  const denuncia = {
-    id: "123",
-    data: "23/02/2024",
-    status: "Em Análise",
-    descricao: "Descrição detalhada da denúncia que precisa de acompanhamento...",
-    prioridade: "Alta",
-    acompanhamentos: [
-      {
-        id: 1,
-        data: "23/02/2024 15:30",
-        profissional: "Dr. Silva",
-        tipo: "Psicólogo",
-        comentario: "Primeira análise realizada. Caso requer atenção imediata.",
-        status: "Iniciado"
-      },
-      {
-        id: 2,
-        data: "23/02/2024 16:45",
-        profissional: "Dra. Ana",
-        tipo: "Advogada",
-        comentario: "Documentação necessária solicitada.",
-        status: "Em Andamento"
+      try {
+        const data = await getDenunciaById(id)
+        console.log('Dados da denúncia carregados:', data)
+        setDenuncia(data)
+      } catch (error) {
+        console.error('Erro ao carregar a denúncia:', error)
       }
-    ]
+    }
+    loadDenuncia()
+  }, [id])
+
+  const handleEnviarAcompanhamento = async () => {
+    try {
+      await addAcompanhamento(id, novoComentario)
+      setNovoComentario('')
+      const data = await getDenunciaById(id)
+      console.log('Dados da denúncia atualizados:', data)
+      setDenuncia(data)
+    } catch (error) {
+      console.error('Erro ao enviar o acompanhamento:', error)
+    }
   }
+
+  const handleDeleteDenuncia = async () => {
+    try {
+      console.log(`Delete: ${id}`)
+      await deleteDenuncia(id)
+      console.log('Denúncia deletada com sucesso')
+      navigate('/denuncias') // Redireciona para a lista de denúncias após a exclusão
+    } catch (error) {
+      console.error('Erro ao deletar a denúncia:', error)
+    }
+  }
+
+  if (!denuncia) {
+    return <div>Carregando...</div>
+  }
+
+  console.log('Estado atual da denúncia:', denuncia)
 
   return (
     <div className={styles.container}>
@@ -52,6 +63,10 @@ const DenunciaAcompanhamento = () => {
         <div className={styles.statusBadge}>
           {denuncia.status}
         </div>
+        <button className={styles.deleteButton} onClick={handleDeleteDenuncia}>
+          <Trash2 size={16} />
+          Deletar Denúncia
+        </button>
       </div>
 
       <div className={styles.content}>
@@ -64,7 +79,7 @@ const DenunciaAcompanhamento = () => {
             <div className={styles.infoContent}>
               <div className={styles.infoRow}>
                 <span>Prioridade:</span>
-                <span className={`${styles.priority} ${styles[denuncia.prioridade.toLowerCase()]}`}>
+                <span className={`${styles.priority} ${styles[denuncia.prioridade?.toLowerCase()]}`}>
                   {denuncia.prioridade}
                 </span>
               </div>
@@ -74,25 +89,29 @@ const DenunciaAcompanhamento = () => {
 
           <div className={styles.timeline}>
             <h3>Histórico de Acompanhamentos</h3>
-            {denuncia.acompanhamentos.map((acomp) => (
-              <div key={acomp.id} className={styles.timelineItem}>
-                <div className={styles.timelineDot}>
-                  <Clock size={16} />
-                </div>
-                <div className={styles.timelineContent}>
-                  <div className={styles.timelineHeader}>
-                    <span className={styles.timelineDate}>{acomp.data}</span>
-                    <span className={styles.timelineStatus}>{acomp.status}</span>
+            {denuncia.acompanhamentos && denuncia.acompanhamentos.length > 0 ? (
+              denuncia.acompanhamentos.map((acomp) => (
+                <div key={acomp.id} className={styles.timelineItem}>
+                  <div className={styles.timelineDot}>
+                    <Clock size={16} />
                   </div>
-                  <div className={styles.profissionalInfo}>
-                    <User size={14} />
-                    <span>{acomp.profissional}</span>
-                    <span className={styles.profissionalTipo}>{acomp.tipo}</span>
+                  <div className={styles.timelineContent}>
+                    <div className={styles.timelineHeader}>
+                      <span className={styles.timelineDate}>{acomp.data}</span>
+                      <span className={styles.timelineStatus}>{acomp.status}</span>
+                    </div>
+                    <div className={styles.profissionalInfo}>
+                      <User size={14} />
+                      <span>{acomp.profissional}</span>
+                      <span className={styles.profissionalTipo}>{acomp.tipo}</span>
+                    </div>
+                    <p className={styles.timelineText}>{acomp.comentario}</p>
                   </div>
-                  <p className={styles.timelineText}>{acomp.comentario}</p>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p>Sem acompanhamentos disponíveis.</p>
+            )}
           </div>
 
           <div className={styles.commentBox}>
@@ -103,7 +122,7 @@ const DenunciaAcompanhamento = () => {
               placeholder="Digite sua análise ou comentário..."
               className={styles.commentInput}
             />
-            <button className={styles.sendButton}>
+            <button className={styles.sendButton} onClick={handleEnviarAcompanhamento}>
               <Send size={16} />
               Enviar Acompanhamento
             </button>

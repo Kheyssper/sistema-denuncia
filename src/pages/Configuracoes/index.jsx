@@ -1,7 +1,7 @@
-import UserList from './components/UserList'
-import SystemSettings from './components/SystemSettings'
-import Logs from './components/Logs'
-import styles from './styles.module.css'
+import UserList from './components/UserList';
+import SystemSettings from './components/SystemSettings';
+import Logs from './components/Logs';
+import styles from './styles.module.css';
 
 const Configuracoes = () => {
   return (
@@ -9,10 +9,9 @@ const Configuracoes = () => {
       <UserList />
       <div className={styles.settingsGrid}>
         <SystemSettings />
-        <Logs />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Configuracoes
+export default Configuracoes;

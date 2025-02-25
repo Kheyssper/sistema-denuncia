@@ -1,32 +1,28 @@
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import InfoCard from './components/InfoCard'
 import Timeline from './components/Timeline'
 import styles from './styles.module.css'
+import { getDenunciaById } from '../../services/api'
 
 const DenunciaDetalhe = () => {
   const { id } = useParams()
+  const [denuncia, setDenuncia] = useState(null)
 
-  // Dados de exemplo
-  const denuncia = {
-    id: 1,
-    data: '2024-02-23',
-    status: 'pendente',
-    prioridade: 'alta',
-    descricao: 'Descrição detalhada da denúncia...',
-    local: 'Rua Exemplo, 123',
-    anonimo: true,
-    timeline: [
-      {
-        data: '23/02/2024 15:30',
-        descricao: 'Denúncia registrada no sistema',
-        usuario: 'Sistema'
-      },
-      {
-        data: '23/02/2024 16:45',
-        descricao: 'Iniciado processo de análise',
-        usuario: 'Dr. Silva'
+  useEffect(() => {
+    const loadDenuncia = async () => {
+      try {
+        const data = await getDenunciaById(id)
+        setDenuncia(data)
+      } catch (error) {
+        console.error('Erro ao carregar a denúncia:', error)
       }
-    ]
+    }
+    loadDenuncia()
+  }, [id])
+
+  if (!denuncia) {
+    return <div>Carregando...</div>
   }
 
   return (
@@ -66,7 +62,7 @@ const DenunciaDetalhe = () => {
 
         <div className={styles.sidebar}>
           <InfoCard title="Histórico de Ações">
-            <Timeline eventos={denuncia.timeline} />
+            <Timeline eventos={denuncia.timeline || []} />
           </InfoCard>
         </div>
       </div>

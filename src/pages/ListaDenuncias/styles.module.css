@@ -1,115 +1,115 @@
 /* src/pages/ListaDenuncias/styles.module.css */
 .container {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    overflow: hidden;
-  }
-  
-  .header {
-    padding: 24px;
-    border-bottom: 1px solid #e2e8f0;
-  }
-  
-  .header h1 {
-    font-size: 24px;
-    color: #1e293b;
-    margin-bottom: 16px;
-  }
-  
-  .filterBar {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .searchInput, .filterSelect {
-    padding: 8px 12px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    outline: none;
-  }
-  
-  .searchInput:focus, .filterSelect:focus {
-    border-color: #3b82f6;
-  }
-  
-  .tableContainer {
-    overflow-x: auto;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .table th, .table td {
-    padding: 16px;
-    text-align: left;
-    border-bottom: 1px solid #e2e8f0;
-  }
-  
-  .table th {
-    background: #f8fafc;
-    font-weight: 500;
-    color: #64748b;
-  }
-  
-  .statusBadge {
-    padding: 4px 8px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-  }
-  
-  .prioridade {
-    padding: 4px 8px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-  }
-  
-  .alta { background: #fee2e2; color: #dc2626; }
-  .media { background: #fef9c3; color: #ca8a04; }
-  .baixa { background: #dcfce7; color: #16a34a; }
-  
-  .acompanhamento {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #64748b;
-    font-size: 14px;
-  }
-  
-  .responsavel {
-    color: #3b82f6;
-    font-weight: 500;
-  }
-  
-  .acoes {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .actionBtn {
-    padding: 6px;
-    border: none;
-    border-radius: 6px;
-    background: #f1f5f9;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  .actionBtn:hover {
-    background: #e2e8f0;
-  }
-  
-  .deleteBtn:hover {
-    background: #fee2e2;
-    color: #dc2626;
-  }
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
 
-  .acompanharBtn:hover {
-    background: #dcfce7;
-    color: #16a34a;
-  }
+.header {
+  padding: 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.header h1 {
+  font-size: 24px;
+  color: #1e293b;
+  margin-bottom: 16px;
+}
+
+.filterBar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.searchInput, .filterSelect {
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  outline: none;
+}
+
+.searchInput:focus, .filterSelect:focus {
+  border-color: #3b82f6;
+}
+
+.tableContainer {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.table th {
+  background: #f8fafc;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.statusBadge {
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.prioridade {
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.alta { background: #fee2e2; color: #dc2626; }
+.media { background: #fef9c3; color: #ca8a04; }
+.baixa { background: #dcfce7; color: #16a34a; }
+
+.acompanhamento {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.responsavel {
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+.acoes {
+  display: flex;
+  gap: 8px;
+}
+
+.actionBtn {
+  padding: 6px;
+  border: none;
+  border-radius: 6px;
+  background: #f1f5f9;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.actionBtn:hover {
+  background: #e2e8f0;
+}
+
+.deleteBtn:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.acompanharBtn:hover {
+  background: #dcfce7;
+  color: #16a34a;
+}

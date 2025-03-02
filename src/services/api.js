@@ -1,26 +1,26 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8000/api',
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-    withCredentials: true
+  baseURL: 'http://localhost:8000/api',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  withCredentials: true
 });
 
 export const login = async (credentials) => {
-    try {
-        const response = await api.post('/auth/login', credentials);
-        const { token, user } = response.data;
-        if (token) {
-            localStorage.setItem('token', token);
-            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        }
-        return response.data;
-    } catch (error) {
-        throw error.response?.data || { message: 'Erro ao fazer login' };
+  try {
+    const response = await api.post('/auth/login', credentials);
+    const { token, user } = response.data;
+    if (token) {
+      localStorage.setItem('token', token);
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Erro ao fazer login' };
+  }
 };
 
 export const getDenuncias = async () => {
@@ -151,17 +151,18 @@ api.interceptors.request.use(
 
 // Interceptor para tratar erros de autenticação
 api.interceptors.response.use(
-    response => response,
-    error => {
-      if (error.response?.status === 401) {
-        localStorage.removeItem('token');
-        window.location.href = '/login';
-      }
-      return Promise.reject(error);
+  response => response,
+  error => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
     }
-  );
+    return Promise.reject(error);
+  }
+);
 
 export default {
+  getDenuncias,
   getDenunciaById,
   addAcompanhamento,
   deleteDenuncia,

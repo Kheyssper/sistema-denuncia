@@ -135,6 +135,21 @@ export const getMonthlyData = async () => {
   return response.data;
 };
 
+export const updateDenunciaStatus = async (id, oldStatus, newStatus) => {
+  try {
+    const response = await api.put(`/denuncias/${id}/status`, {
+      oldStatus,
+      newStatus
+    });
+    console.log('Status da denúncia atualizado:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao atualizar o status da denúncia:', error);
+    throw error;
+  }
+};
+
+
 // Interceptor para adicionar token em todas as requisições
 api.interceptors.request.use(
   config => {
@@ -178,5 +193,6 @@ export default {
   deleteRecurso,
   getNotificacoes,
   getStats,
-  getMonthlyData
+  getMonthlyData,
+  updateDenunciaStatus,
 };

@@ -1,12 +1,7 @@
 // src/pages/ListaDenuncias/components/FilterBar.jsx
 import styles from '../styles.module.css'
 
-const FilterBar = ({ onSearch, onFilter }) => {
-  const handlePriorityFilter = (value) => {
-    // Esta função pode ser implementada conforme necessário
-    console.log('Filtro de prioridade:', value);
-  };
-
+const FilterBar = ({ onSearch, onFilter, onPriorityFilter }) => {
   return (
     <div className={styles.filterBar}>
       <input 
@@ -23,7 +18,7 @@ const FilterBar = ({ onSearch, onFilter }) => {
       </select>
       <select 
         className={styles.filterSelect}
-        onChange={(e) => handlePriorityFilter(e.target.value)}
+        onChange={(e) => onPriorityFilter(e.target.value)}
       >
         <option value="">Todas Prioridades</option>
         <option value="alta">Alta</option>

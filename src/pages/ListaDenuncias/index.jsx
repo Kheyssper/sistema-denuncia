@@ -9,7 +9,8 @@ import api from '../../services/api';
 const ListaDenuncias = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [prioridadeFilter, setPrioridadeFilter] = useState('');
   const [denuncias, setDenuncias] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -64,19 +65,31 @@ const ListaDenuncias = () => {
     }
   };
 
+  // Função para lidar com o filtro de prioridade
+  const handlePrioridadeFilter = (prioridade) => {
+    setPrioridadeFilter(prioridade);
+    console.log('Filtro de prioridade aplicado:', prioridade);
+  };
+
   // Filtrar apenas se denuncias for um array
   const denunciasFiltradas = Array.isArray(denuncias) 
     ? denuncias.filter(denuncia => {
         // Verificar se denuncia existe e tem as propriedades necessárias
         if (!denuncia) return false;
         
+        // Filtro de busca por texto (ID ou descrição)
         const matchesSearch = search === '' || 
           String(denuncia.id || '').includes(search) || 
           (denuncia.descricao && String(denuncia.descricao).toLowerCase().includes(search.toLowerCase()));
         
-        const matchesFilter = filter === '' || denuncia.status === filter;
+        // Filtro por status
+        const matchesStatus = statusFilter === '' || denuncia.status === statusFilter;
         
-        return matchesSearch && matchesFilter;
+        // Filtro por prioridade
+        const matchesPrioridade = prioridadeFilter === '' || denuncia.prioridade === prioridadeFilter;
+        
+        // Aplicar todos os filtros
+        return matchesSearch && matchesStatus && matchesPrioridade;
       })
     : [];
 
@@ -84,7 +97,11 @@ const ListaDenuncias = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1>Lista de Denúncias</h1>
-        <FilterBar onSearch={setSearch} onFilter={setFilter} />
+        <FilterBar 
+          onSearch={setSearch} 
+          onFilter={setStatusFilter} 
+          onPriorityFilter={handlePrioridadeFilter} 
+        />
       </div>
 
       {loading ? (

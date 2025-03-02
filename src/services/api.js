@@ -123,6 +123,18 @@ export const getNotificacoes = async () => {
   return response.data;
 };
 
+export const getStats = async () => {
+  const response = await api.get('/stats');
+  console.log('Dados das estatísticas:', response.data);
+  return response.data;
+};
+
+export const getMonthlyData = async () => {
+  const response = await api.get('/monthly-data');
+  console.log('Dados mensais:', response.data);
+  return response.data;
+};
+
 // Interceptor para adicionar token em todas as requisições
 api.interceptors.request.use(
   config => {
@@ -163,5 +175,7 @@ export default {
   addRecurso,
   updateRecurso,
   deleteRecurso,
-  getNotificacoes
+  getNotificacoes,
+  getStats,
+  getMonthlyData
 };

@@ -1,26 +1,28 @@
 // src/pages/Notificacoes/index.jsx
-import { useState } from 'react'
-import { Bell, AlertTriangle, CheckCircle, Info, Clock, X } from 'lucide-react'
-import styles from './styles.module.css'
+import { useEffect, useState } from 'react';
+import { Bell, AlertTriangle, CheckCircle, Info, Clock, X } from 'lucide-react';
+import pusher from '../../services/pusher';
+import api from '../../services/api';
+import styles from './styles.module.css';
 
 const NotificacaoCard = ({ notificacao, onDismiss }) => {
   const iconMap = {
     alerta: AlertTriangle,
     sucesso: CheckCircle,
     info: Info,
-    pendente: Clock
-  }
-  const Icon = iconMap[notificacao.tipo]
+    pendente: Clock,
+  };
+  const Icon = iconMap[notificacao.tipo] || Info; // Verificação para garantir que Icon sempre tenha um valor válido
 
   return (
     <div className={`${styles.notificacaoCard} ${styles[notificacao.tipo]}`}>
       <div className={styles.notificacaoIconWrapper}>
-        <Icon size={20} />
+        <Icon size={20} color="red"/>
       </div>
       <div className={styles.notificacaoContent}>
         <div className={styles.notificacaoHeader}>
           <h3>{notificacao.titulo}</h3>
-          <span className={styles.timestamp}>{notificacao.tempo}</span>
+          <span className={styles.timestamp} >{notificacao.tempo}</span>
         </div>
         <p>{notificacao.mensagem}</p>
         {notificacao.acao && (
@@ -33,47 +35,49 @@ const NotificacaoCard = ({ notificacao, onDismiss }) => {
         <X size={16} />
       </button>
     </div>
-  )
-}
+  );
+};
 
 const Notificacoes = () => {
-  const [notificacoes, setNotificacoes] = useState([
-    {
-      id: 1,
-      tipo: 'alerta',
-      titulo: 'Nova Denúncia Urgente',
-      mensagem: 'Uma nova denúncia com prioridade alta foi registrada e requer sua atenção imediata.',
-      tempo: 'Agora mesmo',
-      acao: 'Ver Denúncia'
-    },
-    {
-      id: 2,
-      tipo: 'sucesso',
-      titulo: 'Acompanhamento Concluído',
-      mensagem: 'O acompanhamento da denúncia #123 foi finalizado com sucesso.',
-      tempo: '1 hora atrás'
-    },
-    {
-      id: 3,
-      tipo: 'info',
-      titulo: 'Atualização do Sistema',
-      mensagem: 'Novas funcionalidades foram adicionadas ao sistema de denúncias.',
-      tempo: '2 horas atrás',
-      acao: 'Saiba Mais'
-    },
-    {
-      id: 4,
-      tipo: 'pendente',
-      titulo: 'Aguardando Revisão',
-      mensagem: 'Existem 3 denúncias aguardando sua revisão.',
-      tempo: '3 horas atrás',
-      acao: 'Revisar Agora'
-    }
-  ])
+  const [notificacoes, setNotificacoes] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    const fetchNotificacoes = async () => {
+      try {
+        const data = await api.getNotificacoes();
+        setNotificacoes(data);
+        setUnreadCount(data.filter(notificacao => !notificacao.lida).length);
+      } catch (error) {
+        console.error('Erro ao carregar notificações:', error);
+      }
+    };
+
+    fetchNotificacoes();
+
+    const channel = pusher.subscribe('denuncias');
+    console.log('🔄 Tentando se inscrever no canal denuncias...');
+
+    channel.bind('NovaDenuncia', (data) => {
+      console.log('🔔 Nova denúncia recebida:', data);
+      setNotificacoes((prevNotificacoes) => [data, ...prevNotificacoes]);
+      setUnreadCount((prevCount) => prevCount + 1);
+    });
+
+    return () => {
+      console.log('🛑 Cancelando inscrição no canal denuncias');
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  }, []);
 
   const handleDismiss = (id) => {
-    setNotificacoes(prev => prev.filter(n => n.id !== id))
-  }
+    setNotificacoes(prev => prev.filter(n => n.id !== id));
+  };
+
+  const handleClearNotifications = () => {
+    setUnreadCount(0);
+  };
 
   return (
     <div className={styles.container}>
@@ -82,7 +86,7 @@ const Notificacoes = () => {
           <Bell size={24} />
           <h1>Notificações</h1>
         </div>
-        <button className={styles.clearAllBtn}>
+        <button className={styles.clearAllBtn} onClick={handleClearNotifications}>
           Limpar Todas
         </button>
       </div>
@@ -97,7 +101,7 @@ const Notificacoes = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Notificacoes
+export default Notificacoes;

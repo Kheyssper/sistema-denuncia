@@ -117,6 +117,12 @@ export const deleteRecurso = async (id) => {
   return response.data;
 };
 
+export const getNotificacoes = async () => {
+  const response = await api.get('/notificacoes');
+  console.log('Dados das notificações:', response.data);
+  return response.data;
+};
+
 // Interceptor para adicionar token em todas as requisições
 api.interceptors.request.use(
   config => {
@@ -142,7 +148,7 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
   );
-  
+
 export default {
   getDenunciaById,
   addAcompanhamento,
@@ -156,5 +162,6 @@ export default {
   getConscientizacao,
   addRecurso,
   updateRecurso,
-  deleteRecurso
+  deleteRecurso,
+  getNotificacoes
 };

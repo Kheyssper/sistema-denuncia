@@ -35,8 +35,8 @@ const DenunciaTable = ({ denuncias, onView, onDelete, onAcompanhar }) => {
               <tr key={denuncia.id}>
                 <td>#{denuncia.id}</td>
                 <td>
-                  {denuncia.data && typeof denuncia.data === 'string'
-                    ? format(parseISO(denuncia.data), 'dd/MM/yyyy')
+                  {denuncia.created_at && typeof denuncia.created_at === 'string'
+                    ? format(parseISO(denuncia.created_at), 'dd/MM/yyyy')
                     : 'Data inválida'}
                 </td>
                 <td><StatusBadge status={denuncia.status} /></td>

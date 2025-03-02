@@ -1,3 +1,4 @@
+// src/services/api.js - mantendo a estrutura original
 import axios from 'axios';
 
 const api = axios.create({
@@ -149,6 +150,77 @@ export const updateDenunciaStatus = async (id, oldStatus, newStatus) => {
   }
 };
 
+// NOVAS FUNÇÕES PARA O PERFIL
+// ---------------------------
+
+// Função para obter dados do usuário atual
+// Correção da função getCurrentUser no arquivo api.js
+
+// Função para obter dados do usuário atual
+export const getCurrentUser = async () => {
+  try {
+    // Obter o ID do usuário logado (você precisa armazenar isso durante o login)
+    const userId = localStorage.getItem('userId');
+    
+    if (!userId) {
+      throw new Error('ID do usuário não encontrado');
+    }
+    
+    // Buscar a lista de usuários
+    const users = await getUsers();
+    console.log('Dados do usuário atual:', users);
+    
+    // Encontrar o usuário correspondente ao ID
+    const currentUser = users.find(user => user.id === parseInt(userId));
+    
+    if (!currentUser) {
+      throw new Error('Usuário não encontrado');
+    }
+    
+    return currentUser;
+  } catch (error) {
+    console.error('Erro ao buscar dados do usuário atual:', error);
+    throw error.response?.data || { message: 'Erro ao buscar dados do usuário' };
+  }
+};
+
+// Função para atualizar dados do usuário atual
+export const updateCurrentUser = async (userData) => {
+  try {
+    const response = await api.put('/users', userData);
+    console.log('Dados do usuário atualizados:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao atualizar dados do usuário:', error);
+    throw error.response?.data || { message: 'Erro ao atualizar dados do usuário' };
+  }
+};
+
+// Função para alterar senha do usuário - corrigida para usar a rota correta
+export const changePassword = async (passwordData) => {
+  try {
+    const userId = localStorage.getItem('userId');
+    
+    if (!userId) {
+      throw new Error('ID do usuário não encontrado');
+    }
+    
+    // Formatar dados para o padrão Laravel
+    const formattedData = {
+      currentPassword: passwordData.currentPassword,
+      newPassword: passwordData.newPassword,
+      newPassword_confirmation: passwordData.confirmPassword || passwordData.newPassword_confirmation
+    };
+    
+    // Corrigindo para usar a rota apropriada com o ID do usuário
+    const response = await api.post(`/users/${userId}/change-password`, formattedData);
+    console.log('Senha alterada com sucesso');
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao alterar senha:', error);
+    throw error.response?.data || { message: 'Erro ao alterar senha' };
+  }
+};
 
 // Interceptor para adicionar token em todas as requisições
 api.interceptors.request.use(
@@ -195,4 +267,8 @@ export default {
   getStats,
   getMonthlyData,
   updateDenunciaStatus,
+  // Adicionando as novas funções ao export default
+  getCurrentUser,
+  updateCurrentUser,
+  changePassword
 };

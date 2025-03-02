@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Users, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { PieChart, Pie, Cell, Legend } from 'recharts';
 import StatsCard from './components/StatsCard';
 import RecentList from './components/RecentList';
 import api from '../../services/api';

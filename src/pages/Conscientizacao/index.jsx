@@ -24,8 +24,15 @@ const RecursoCard = ({ id, titulo, descricao, tipo, link, onEdit, onDelete }) =>
           <ExternalLink size={16} />
         </a>
         <div className={styles.actions}>
-          <button className={styles.actionButton} onClick={() => onEdit(id)}><Edit size={16} /></button>
-          <button className={`${styles.actionButton} ${styles.deleteButton}`} onClick={() => onDelete(id)}><Trash2 size={16} /></button>
+          <button className={styles.actionButton} onClick={() => onEdit(id)}>
+            <Edit size={16} />
+          </button>
+          <button 
+            className={`${styles.actionButton} ${styles.deleteButton}`} 
+            onClick={() => onDelete(id)}
+          >
+            <Trash2 size={16} />
+          </button>
         </div>
       </div>
     </div>
@@ -105,11 +112,13 @@ const Conscientizacao = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1>Central de Conscientização</h1>
+        <div className={styles.headerTop}>
+          <h1>Central de Conscientização</h1>
+          <button className={styles.addButton} onClick={handleOpenModal}>
+            <PlusCircle size={20} /> Adicionar Recurso
+          </button>
+        </div>
         <p>Recursos educativos para prevenção e enfrentamento da violência</p>
-        <button className={styles.addButton} onClick={handleOpenModal}>
-          <PlusCircle size={20} /> Adicionar Recurso
-        </button>
       </div>
 
       <div className={styles.categoryGrid}>

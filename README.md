@@ -1,8 +1,14 @@
-# React + Vite
+## About Sistema Denúncias Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema Denúncias é um projeto que visa criar uma plataforma eficiente para gerenciar relatos e denúncias, oferecendo funcionalidades para reportar, acompanhar e gerenciar atividades relacionadas.
 
-Currently, two official plugins are available:
+- Gerenciamento de Relatos: O aplicativo permite aos usuários reportar denúncias de forma fácil e rápida.
+- Tratamento de Denúncias: Oferece recursos para acompanhar o progresso das denúncias relatadas.
+- Conscientização: Proporciona informações e materiais educacionais sobre diversos assuntos relevantes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
+
+1. Clone the project from GitHub:
+2. `npm install`
+3. `npm run dev`
+4. `npm install pusher`

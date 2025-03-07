@@ -118,9 +118,16 @@ export const deleteRecurso = async (id) => {
   return response.data;
 };
 
-export const getNotificacoes = async () => {
-  const response = await api.get('/notificacoes');
-  console.log('Dados das notificações:', response.data);
+// export const getNotificacoes = async () => {
+//   const response = await api.get('/notificacoes');
+//   console.log('Dados das notificações:', response.data);
+//   return response.data;
+// };
+
+export const getNotificacoes = async (params = {}) => {
+  const queryParams = new URLSearchParams(params).toString();
+  const url = queryParams ? `/notificacoes?${queryParams}` : '/notificacoes';
+  const response = await api.get(url);
   return response.data;
 };
 
@@ -222,6 +229,23 @@ export const changePassword = async (passwordData) => {
   }
 };
 
+export const marcarNotificacaoComoLida = async (id) => {
+  const response = await api.put(`/notificacoes/${id}/marcar-lida`);
+  return response.data;
+};
+
+export const marcarTodasNotificacoesComoLidas = async () => {
+  const response = await api.post('/notificacoes/marcar-todas-lidas');
+  return response.data;
+};
+
+export const deleteNotificacao = async (id) => {
+  const response = await api.delete(`/notificacoes/${id}`);
+  return response.data;
+};
+
+
+
 // Interceptor para adicionar token em todas as requisições
 api.interceptors.request.use(
   config => {
@@ -270,5 +294,8 @@ export default {
   // Adicionando as novas funções ao export default
   getCurrentUser,
   updateCurrentUser,
-  changePassword
+  changePassword,
+  marcarNotificacaoComoLida,
+  marcarTodasNotificacoesComoLidas,
+  deleteNotificacao
 };

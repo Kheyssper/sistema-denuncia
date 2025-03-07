@@ -182,3 +182,65 @@
   .notificacaoCard {
     animation: slideIn 0.3s ease forwards;
   }
+
+
+  .loadingContainer, .emptyContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    color: #64748b;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  .loader {
+    animation: spin 1.5s linear infinite;
+    margin-bottom: 16px;
+  }
+  
+  .emptyIcon {
+    color: #cbd5e1;
+    margin-bottom: 16px;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Estado de não lida */
+  .notificacaoCard.naoLida {
+    background-color: #f8fafc;
+    position: relative;
+  }
+  
+  .notificacaoCard.naoLida::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 8px;
+    height: 8px;
+    background-color: #3b82f6;
+    border-radius: 50%;
+  }
+  
+  /* Estilo para cursor pointer */
+  .notificacaoCard {
+    cursor: pointer;
+  }
+  
+  /* Efeito de transição ao remover */
+  .notificacaoCard.saindo {
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }

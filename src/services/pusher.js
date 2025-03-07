@@ -6,12 +6,21 @@ let notificacoesChannel = null;
 
 export const initializePusher = () => {
   if (!pusher) {
-    pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
-      cluster: process.env.REACT_APP_PUSHER_CLUSTER,
+    // Usando as variáveis de ambiente do Vite
+    const pusherKey = import.meta.env.VITE_PUSHER_APP_KEY;
+    const pusherCluster = import.meta.env.VITE_PUSHER_APP_CLUSTER;
+    
+    if (!pusherKey) {
+      console.error('ERRO: VITE_PUSHER_APP_KEY não definido no arquivo .env');
+      return null;
+    }
+    
+    pusher = new Pusher(pusherKey, {
+      cluster: pusherCluster,
       encrypted: true
     });
     
-    console.log('Pusher inicializado');
+    console.log('Pusher inicializado com key:', pusherKey, 'e cluster:', pusherCluster);
   }
   
   return pusher;
@@ -19,6 +28,11 @@ export const initializePusher = () => {
 
 export const subscribeToNotificacoes = (callback) => {
   const pusherInstance = initializePusher();
+  
+  if (!pusherInstance) {
+    console.error('Não foi possível inicializar o Pusher');
+    return () => {};
+  }
   
   if (!notificacoesChannel) {
     notificacoesChannel = pusherInstance.subscribe('notificacoes');
@@ -48,3 +62,5 @@ export const unsubscribeFromNotificacoes = () => {
     console.log('Cancelada inscrição no canal notificacoes');
   }
 };
+
+export default pusher;

@@ -1,7 +1,7 @@
 // src/pages/ListaDenuncias/components/FilterBar.jsx
 import styles from '../styles.module.css'
 
-const FilterBar = ({ onSearch, onFilter }) => {
+const FilterBar = ({ onSearch, onFilter, onPriorityFilter }) => {
   return (
     <div className={styles.filterBar}>
       <input 
@@ -16,7 +16,10 @@ const FilterBar = ({ onSearch, onFilter }) => {
         <option value="em_analise">Em Análise</option>
         <option value="resolvido">Resolvido</option>
       </select>
-      <select className={styles.filterSelect}>
+      <select 
+        className={styles.filterSelect}
+        onChange={(e) => onPriorityFilter(e.target.value)}
+      >
         <option value="">Todas Prioridades</option>
         <option value="alta">Alta</option>
         <option value="media">Média</option>
@@ -26,7 +29,3 @@ const FilterBar = ({ onSearch, onFilter }) => {
   )
 }
 export default FilterBar;
-
-
-
-

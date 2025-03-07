@@ -7,9 +7,6 @@ const Configuracoes = () => {
   return (
     <div className={styles.pageContainer}>
       <UserList />
-      <div className={styles.settingsGrid}>
-        <SystemSettings />
-      </div>
     </div>
   );
 };

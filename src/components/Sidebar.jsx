@@ -4,7 +4,6 @@ import { LayoutDashboard, FileText, Eye, BookOpen, HelpCircle, FolderTree } from
 const menuItems = [
   { path: "/", label: "Painel", icon: LayoutDashboard },
   { path: "/denuncia", label: "Nova Denúncia", icon: FileText },
-  { path: "/acompanhar", label: "Acompanhar", icon: Eye },
   { path: "/conscientizacao", label: "Conscientização", icon: BookOpen },
   { path: "/perguntas", label: "Perguntas", icon: HelpCircle },
   { path: "/categorias", label: "Categorias", icon: FolderTree }

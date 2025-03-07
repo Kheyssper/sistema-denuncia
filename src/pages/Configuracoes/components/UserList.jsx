@@ -178,10 +178,11 @@ const UserList = () => {
                   value={tipo}
                   onChange={(e) => setTipo(e.target.value)}
                   required
+                  className={`${styles.select} ${styles.selectWrapper}`}
                 >
                   <option value="">Selecione o tipo</option>
                   <option value="advogado">Advogado</option>
-                  <option value="policia">Polícia</option>
+                  <option value="policia">Policia</option>
                   <option value="psicologo">Psicólogo</option>
                 </select>
               </div>
@@ -254,10 +255,10 @@ const UserList = () => {
       {showDeleteModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <h2>Excluir Usuário</h2>
-            <p>Tem certeza de que deseja excluir o usuário {currentUser?.nome}?</p>
+            <h2>Eliminar Usuário</h2>
+            <p>Tem certeza de que deseja eliminar o usuário {currentUser?.nome}?</p>
             <div className={styles.formActions}>
-              <button type="button" className={styles.submitButton} onClick={handleDeleteSubmit}>Excluir</button>
+              <button type="submit" className={styles.submitButton}>Confirmar Eliminar</button>
               <button type="button" className={styles.cancelButton} onClick={handleCloseModal}>Cancelar</button>
             </div>
           </div>

@@ -26,10 +26,6 @@ const RootLayout = () => {
             <FileText size={20} />
             Denúncias
           </Link>
-          <Link to="/acompanhar" className={`${styles.navLink} ${location.pathname === '/acompanhar' ? styles.active : ''}`}>
-            <Eye size={20} />
-            Acompanhar
-          </Link>
           <Link to="/conscientizacao" className={`${styles.navLink} ${location.pathname === '/conscientizacao' ? styles.active : ''}`}>
             <BookOpen size={20} />
             Conscientização

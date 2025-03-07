@@ -11,6 +11,7 @@ import Notificacoes from './pages/Notificacoes'
 import Login from './pages/Login'
 import PrivateRoute from './components/PrivateRoute';
 
+
 function App() {
   return (
     <Routes>

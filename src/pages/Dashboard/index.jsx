@@ -1,38 +1,28 @@
-import { Users, AlertTriangle, CheckCircle, Clock } from 'lucide-react'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import { PieChart, Pie, Cell, Legend } from 'recharts'
-import StatsCard from './components/StatsCard'
-import RecentList from './components/RecentList'
-import styles from './styles.module.css'
+import { useEffect, useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import StatsCard from './components/StatsCard';
+import RecentList from './components/RecentList';
+import api from '../../services/api';
+import styles from './styles.module.css';
 
 const Dashboard = () => {
-  const statsData = [
-    {
-      icon: Users,
-      title: "Total Denúncias",
-      value: "91",
-      trend: true,
-      trendValue: "12%",
-      bgColor: "#e0f2fe",
-      iconColor: "#0284c7"
-    },
-    {
-      icon: AlertTriangle,
-      title: "Pendentes",
-      value: "15",
-      bgColor: "#fef9c3",
-      iconColor: "#ca8a04"
-    },
-    // ... outros cards
-  ]
+  const [statsData, setStatsData] = useState([]);
+  const [monthlyData, setMonthlyData] = useState([]);
 
-  const monthlyData = [
-    { month: 'Jan', denuncias: 65 },
-    { month: 'Fev', denuncias: 78 },
-    { month: 'Mar', denuncias: 91 },
-    { month: 'Abr', denuncias: 84 },
-    { month: 'Mai', denuncias: 70 }
-  ]
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const statsResponse = await api.getStats();
+        const monthlyResponse = await api.getMonthlyData();
+        setStatsData(statsResponse);
+        setMonthlyData(monthlyResponse);
+      } catch (error) {
+        console.error('Erro ao carregar dados do dashboard:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -58,7 +48,7 @@ const Dashboard = () => {
         <RecentList />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

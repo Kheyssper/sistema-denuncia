@@ -35,6 +35,11 @@ const DenunciaAcompanhamento = () => {
         await updateDenunciaStatus(id, 'pendente', 'em_analise')
       }
 
+      if (denuncia.status === 'resolvido') {
+        // Atualizar o status para em_analise
+        await updateDenunciaStatus(id, 'resolvido', 'em_analise')
+      }
+
       // Recarregar os dados da denúncia
       const data = await getDenunciaById(id)
       console.log('Dados da denúncia atualizados:', data)
@@ -43,6 +48,28 @@ const DenunciaAcompanhamento = () => {
       console.error('Erro ao enviar o acompanhamento:', error)
     }
   }
+
+  const handleFinalizarAcompanhamento = async () => {
+    if (denuncia.acompanhamentos && denuncia.acompanhamentos.length > 0) {
+      try {
+        await updateDenunciaStatus(id, 'pendente', 'resolvido');
+
+        // Recarregar os dados da denúncia
+        const data = await getDenunciaById(id);
+        console.log('Dados da denúncia atualizados:', data);
+        setDenuncia(data);
+
+        // Show a success message
+        alert('Acompanhamento finalizado com sucesso!');
+      } catch (error) {
+        console.error('Erro ao finalizar o acompanhamento:', error);
+        alert('Ocorreu um erro ao finalizar o acompanhamento. Por favor, tente novamente.');
+      }
+    } else {
+      alert('Não há acompanhamentos para finalizar.');
+    }
+  };
+
 
   const handleDeleteDenuncia = async () => {
     try {
@@ -66,7 +93,7 @@ const DenunciaAcompanhamento = () => {
       <div className={styles.header}>
         <div>
           <h1>Acompanhamento da Denúncia #{id}</h1>
-          <span className={styles.date}>Registrada em 
+          <span className={styles.date}>Registrada em
             {new Date(denuncia.created_at).toLocaleDateString('pt-BR', {
               year: 'numeric',
               month: 'long',
@@ -153,6 +180,9 @@ const DenunciaAcompanhamento = () => {
               <p>Sem acompanhamentos disponíveis.</p>
             )}
           </div>
+          <button className={styles.finalizeButton} onClick={handleFinalizarAcompanhamento}>
+            Finalizar Acompanhamento
+          </button>
 
 
         </div>

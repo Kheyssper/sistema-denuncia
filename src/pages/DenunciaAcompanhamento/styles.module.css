@@ -183,3 +183,14 @@
   .sendButton:hover {
     background: #2563eb;
   }
+
+  .finalizeButton {
+    background-color: #11aa22;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-left: 40%;
+    border-radius: 8px;
+  }

@@ -60,11 +60,11 @@ const DenunciaDetalhe = () => {
           </InfoCard>
         </div>
 
-        <div className={styles.sidebar}>
+        {/* <div className={styles.sidebar}>
           <InfoCard title="Histórico de Ações">
             <Timeline eventos={denuncia.timeline || []} />
           </InfoCard>
-        </div>
+        </div> */}
       </div>
     </div>
   )

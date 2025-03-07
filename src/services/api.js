@@ -125,10 +125,16 @@ export const deleteRecurso = async (id) => {
 // };
 
 export const getNotificacoes = async (params = {}) => {
-  const queryParams = new URLSearchParams(params).toString();
-  const url = queryParams ? `/notificacoes?${queryParams}` : '/notificacoes';
-  const response = await api.get(url);
-  return response.data;
+  try {
+    const queryParams = new URLSearchParams(params).toString();
+    const url = queryParams ? `/notificacoes?${queryParams}` : '/notificacoes';
+    const response = await api.get(url);
+    console.log('Resposta da API de notificações:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao obter notificações:', error);
+    throw error.response?.data || { message: 'Erro ao obter notificações' };
+  }
 };
 
 export const getStats = async () => {
@@ -168,22 +174,22 @@ export const getCurrentUser = async () => {
   try {
     // Obter o ID do usuário logado (você precisa armazenar isso durante o login)
     const userId = localStorage.getItem('userId');
-    
+
     if (!userId) {
       throw new Error('ID do usuário não encontrado');
     }
-    
+
     // Buscar a lista de usuários
     const users = await getUsers();
     console.log('Dados do usuário atual:', users);
-    
+
     // Encontrar o usuário correspondente ao ID
     const currentUser = users.find(user => user.id === parseInt(userId));
-    
+
     if (!currentUser) {
       throw new Error('Usuário não encontrado');
     }
-    
+
     return currentUser;
   } catch (error) {
     console.error('Erro ao buscar dados do usuário atual:', error);
@@ -207,18 +213,18 @@ export const updateCurrentUser = async (userData) => {
 export const changePassword = async (passwordData) => {
   try {
     const userId = localStorage.getItem('userId');
-    
+
     if (!userId) {
       throw new Error('ID do usuário não encontrado');
     }
-    
+
     // Formatar dados para o padrão Laravel
     const formattedData = {
       currentPassword: passwordData.currentPassword,
       newPassword: passwordData.newPassword,
       newPassword_confirmation: passwordData.confirmPassword || passwordData.newPassword_confirmation
     };
-    
+
     // Corrigindo para usar a rota apropriada com o ID do usuário
     const response = await api.post(`/users/${userId}/change-password`, formattedData);
     console.log('Senha alterada com sucesso');
@@ -230,18 +236,33 @@ export const changePassword = async (passwordData) => {
 };
 
 export const marcarNotificacaoComoLida = async (id) => {
-  const response = await api.put(`/notificacoes/${id}/marcar-lida`);
-  return response.data;
+  try {
+    const response = await api.put(`/notificacoes/${id}/marcar-lida`);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao marcar notificação como lida:', error);
+    throw error.response?.data || { message: 'Erro ao marcar notificação como lida' };
+  }
 };
 
 export const marcarTodasNotificacoesComoLidas = async () => {
-  const response = await api.post('/notificacoes/marcar-todas-lidas');
-  return response.data;
+  try {
+    const response = await api.post('/notificacoes/marcar-todas-lidas');
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao marcar todas notificações como lidas:', error);
+    throw error.response?.data || { message: 'Erro ao marcar todas notificações como lidas' };
+  }
 };
 
 export const deleteNotificacao = async (id) => {
-  const response = await api.delete(`/notificacoes/${id}`);
-  return response.data;
+  try {
+    const response = await api.delete(`/notificacoes/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao deletar notificação:', error);
+    throw error.response?.data || { message: 'Erro ao deletar notificação' };
+  }
 };
 
 

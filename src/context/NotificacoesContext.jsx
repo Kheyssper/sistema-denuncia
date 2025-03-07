@@ -1,4 +1,4 @@
-// src/contexts/NotificacoesContext.jsx
+// src/context/NotificacoesContext.jsx
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { getNotificacoes, marcarNotificacaoComoLida, marcarTodasNotificacoesComoLidas, deleteNotificacao } from '../services/api';
 import { subscribeToNotificacoes, unsubscribeFromNotificacoes } from '../services/pusher';
@@ -14,6 +14,7 @@ export const NotificacoesProvider = ({ children }) => {
 
   // Carregar notificações iniciais
   useEffect(() => {
+    console.log('NotificacoesProvider montado');
     carregarNotificacoes();
     
     // Inscrever no canal do Pusher
@@ -28,16 +29,35 @@ export const NotificacoesProvider = ({ children }) => {
 
   // Função para carregar notificações do servidor
   const carregarNotificacoes = async () => {
+    console.log('Carregando notificações...');
     try {
       setCarregando(true);
       const data = await getNotificacoes();
-      setNotificacoes(data.data || []);
+      console.log('Notificações recebidas:', data);
       
-      // Contar notificações não lidas
-      const naoLidasCount = (data.data || []).filter(notif => !notif.lida).length;
-      setNaoLidas(naoLidasCount);
+      if (data && Array.isArray(data.data)) {
+        setNotificacoes(data.data || []);
+        
+        // Contar notificações não lidas
+        const naoLidasCount = (data.data || []).filter(notif => !notif.lida).length;
+        setNaoLidas(naoLidasCount);
+        console.log('Notificações não lidas:', naoLidasCount);
+      } else if (Array.isArray(data)) {
+        setNotificacoes(data || []);
+        
+        // Contar notificações não lidas
+        const naoLidasCount = (data || []).filter(notif => !notif.lida).length;
+        setNaoLidas(naoLidasCount);
+        console.log('Notificações não lidas:', naoLidasCount);
+      } else {
+        console.error('Formato de dados inesperado:', data);
+        setNotificacoes([]);
+        setNaoLidas(0);
+      }
     } catch (error) {
       console.error('Erro ao carregar notificações:', error);
+      setNotificacoes([]);
+      setNaoLidas(0);
     } finally {
       setCarregando(false);
     }
@@ -51,9 +71,11 @@ export const NotificacoesProvider = ({ children }) => {
       setNotificacoes(prev => [data.notificacao, ...prev]);
       // Incrementar contador de não lidas
       setNaoLidas(prev => prev + 1);
-      
-      // Opcional: Mostrar uma notificação temporária na tela
-      // toast.info(`Nova notificação: ${data.notificacao.titulo}`);
+    } else {
+      // Se recebemos um evento, mas não temos a notificação completa,
+      // recarregar notificações do servidor
+      console.log('Evento de notificação recebido sem dados completos, recarregando...');
+      carregarNotificacoes();
     }
   };
 
@@ -69,6 +91,8 @@ export const NotificacoesProvider = ({ children }) => {
       
       // Atualizar contador de não lidas
       setNaoLidas(prev => Math.max(0, prev - 1));
+      
+      console.log('Notificação marcada como lida:', id);
     } catch (error) {
       console.error('Erro ao marcar notificação como lida:', error);
     }
@@ -90,6 +114,8 @@ export const NotificacoesProvider = ({ children }) => {
       if (eraNaoLida) {
         setNaoLidas(prev => Math.max(0, prev - 1));
       }
+      
+      console.log('Notificação removida:', id);
     } catch (error) {
       console.error('Erro ao remover notificação:', error);
     }
@@ -103,6 +129,8 @@ export const NotificacoesProvider = ({ children }) => {
       // Atualizar estado local
       setNotificacoes(prev => prev.map(notif => ({ ...notif, lida: true })));
       setNaoLidas(0);
+      
+      console.log('Todas as notificações marcadas como lidas');
     } catch (error) {
       console.error('Erro ao marcar todas as notificações como lidas:', error);
     }

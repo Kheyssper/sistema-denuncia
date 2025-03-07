@@ -1,0 +1,23 @@
+/* src/components/NotificationBadge/styles.module.css */
+.notification {
+    position: relative;
+    display: inline-flex;
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ef4444;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }

@@ -3,9 +3,10 @@ import { Link, useLocation } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 import {
   LayoutDashboard, FileText, Eye, BookOpen,
-  Bell, LogOut, Settings, User
+  LogOut, Settings, User
 } from 'lucide-react'
 import styles from './RootLayout.module.css'
+import NotificationBadge from '../components/NotificationBadge'
 
 const RootLayout = () => {
   const location = useLocation();
@@ -48,10 +49,9 @@ const RootLayout = () => {
         <header className={styles.header}>
           <h2>Dashboard</h2>
           <div className={styles.headerActions}>
-            <Link to="/notificacoes" className={styles.headerIcon}>
-              <Bell size={20} />
-              <span className={styles.notificationBadge}>0</span>
-            </Link>
+            <div className={styles.headerIcon}>
+              <NotificationBadge />
+            </div>
             <Link to="/perfil" className={styles.headerIcon}>
               <User size={20} />
             </Link>

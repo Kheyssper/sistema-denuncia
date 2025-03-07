@@ -1,25 +1,16 @@
 // src/components/PrivateRoute.jsx
-
-import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "../pages/Login";
-import RootLayout from "../layouts/RootLayout";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const PrivateRoute = ({ children }) => {
-    const { user } = useAuth();
-    return user ? children : <Navigate to="/login" />;
-  };
+  const { user, loading } = useAuth();
   
-  // App.jsx
-  <Routes>
-    <Route path="/login" element={<Login />} />
-    <Route path="/" element={
-      <PrivateRoute>
-        <RootLayout />
-      </PrivateRoute>
-    }>
-      {/* outras rotas */}
-    </Route>
-  </Routes>
+  // Enquanto verifica a autenticação, mostre algo (opcional)
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+  
+  return user ? children : <Navigate to="/login" />;
+};
 
-  export default PrivateRoute;
+export default PrivateRoute;

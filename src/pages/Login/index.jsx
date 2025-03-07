@@ -3,36 +3,37 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, Mail, AlertCircle } from 'lucide-react';
 import styles from './styles.module.css';
-import { login } from '../../services/api'; // Certifique-se de que a importação está correta
+import { useAuth } from '../../context/AuthContext'; // Importe o hook useAuth
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth(); // Use o hook useAuth
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    
     try {
-      const response = await login({
+      // Use a função login do contexto
+      await login({
         email: formData.email,
         password: formData.password
       });
 
-      // Salvar dados do usuário
-      localStorage.setItem('token', response.token);
-      localStorage.setItem('user', JSON.stringify(response.user));
-
       // Redirecionar para o dashboard
       navigate('/');
-
-      // Log para debug
       console.log('Login bem sucedido, redirecionando...');
     } catch (error) {
       setError('Email ou senha inválidos');
       console.error('Erro no login:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,6 +65,7 @@ const Login = () => {
                 placeholder="Seu email"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
+                required
               />
             </div>
           </div>
@@ -77,6 +79,7 @@ const Login = () => {
                 placeholder="Sua senha"
                 value={formData.password}
                 onChange={(e) => setFormData({...formData, password: e.target.value})}
+                required
               />
             </div>
           </div>
@@ -91,8 +94,12 @@ const Login = () => {
             </a>
           </div>
 
-          <button type="submit" className={styles.loginButton}>
-            Entrar no Sistema
+          <button 
+            type="submit" 
+            className={styles.loginButton}
+            disabled={loading}
+          >
+            {loading ? 'Entrando...' : 'Entrar no Sistema'}
           </button>
         </form>
       </div>

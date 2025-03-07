@@ -10,17 +10,42 @@ const api = axios.create({
   withCredentials: true
 });
 
+// export const login = async (credentials) => {
+//   try {
+//     const response = await api.post('/auth/login', credentials);
+//     const { token, user } = response.data;
+//     if (token) {
+//       localStorage.setItem('token', token);
+//       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+//     }
+//     return response.data;
+//   } catch (error) {
+//     throw error.response?.data || { message: 'Erro ao fazer login' };
+//   }
+// };
+
+// Dentro do seu componente Login ou onde você manipula o login
 export const login = async (credentials) => {
   try {
     const response = await api.post('/auth/login', credentials);
     const { token, user } = response.data;
+    
     if (token) {
       localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      
+      // Importante: configure o token no cabeçalho para solicitações futuras
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      
+      // Atualize o estado de usuário no contexto
+      setUser(user);
     }
-    return response.data;
+    
+    // Navegue para a página inicial
+    navigate('/');
   } catch (error) {
-    throw error.response?.data || { message: 'Erro ao fazer login' };
+    console.error('Erro no login:', error);
+    setError('Email ou senha inválidos');
   }
 };
 

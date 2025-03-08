@@ -68,11 +68,9 @@ const RecentList = () => {
   // Função para determinar a cor do status
   const getStatusColor = (status) => {
     const statusColors = {
-      'Aberta': '#3b82f6', // Azul
-      'Em Análise': '#f59e0b', // Amarelo
-      'Resolvida': '#10b981', // Verde
-      'Arquivada': '#6b7280', // Cinza
-      'Pendente': '#ef4444', // Vermelho
+      'em_analise': '#f59e0b', // Amarelo
+      'resolvido': '#10b981', // Verde
+      'pendente': '#ef4444', // Vermelho
     };
     return statusColors[status] || '#3b82f6';
   };
@@ -93,6 +91,7 @@ const RecentList = () => {
       ) : (
         <div className={styles.recentListContainer}>
           {recentReports.map((report) => {
+            console.log('Report:', report);
             // Determinar o ícone com base no status
             let StatusIcon = AlertCircle;
             
@@ -102,10 +101,10 @@ const RecentList = () => {
                   <StatusIcon size={16} color="white" />
                 </div>
                 <div className={styles.recentListContent}>
-                  <h4>{truncateText(report.titulo || report.title || 'Sem título', 60)}</h4>
-                  <p>{truncateText(report.descricao || report.description || report.desc || '', 70)}</p>
+                  {/* <h4>{truncateText(report.titulo || report.title || 'Sem título', 60)}</h4> */}
+                  <p>{truncateText(report.descricao || 70)}</p>
                   <div className={styles.recentListMeta}>
-                    <span><Calendar size={12} /> {formatDate(report.dataCriacao || report.dataRegistro || report.data || report.date)}</span>
+                    <span><Calendar size={12} /> {formatDate(report.created_at || report.dataRegistro || report.data || report.date)}</span>
                     <span><Clock size={12} /> {report.status || 'Não definido'}</span>
                   </div>
                 </div>

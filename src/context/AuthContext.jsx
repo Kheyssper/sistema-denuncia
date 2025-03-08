@@ -1,6 +1,6 @@
-// src/context/AuthContext.jsx
+// src/context/AuthContext.jsx - função login corrigida
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import api from '../services/api'; // Verifique se esta importação está correta
+import api, { login as apiLogin } from '../services/api';
 
 const AuthContext = createContext();
 
@@ -38,6 +38,32 @@ export const AuthProvider = ({ children }) => {
     initAuth();
   }, []);
 
+  // Adicione a função login correta
+  const login = async (credentials) => {
+    try {
+      const response = await apiLogin(credentials);
+      
+      if (response && response.token && response.user) {
+        // Armazene o token e o usuário
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        
+        // Configure o token para as requisições
+        if (api && api.defaults) {
+          api.defaults.headers.common['Authorization'] = `Bearer ${response.token}`;
+        }
+        
+        // Atualize o estado do usuário
+        setUser(response.user);
+        
+        return response.user;
+      }
+    } catch (error) {
+      console.error('Erro no login:', error);
+      throw error;
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -51,7 +77,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, logout, loading }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

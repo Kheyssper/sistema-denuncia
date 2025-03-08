@@ -1,5 +1,7 @@
 // src/services/api.js - mantendo a estrutura original
 import axios from 'axios';
+let lastFetchTime = 0;
+const THROTTLE_INTERVAL = 5000; // 5 segundos
 
 const api = axios.create({
   baseURL: 'http://localhost:8000/api',
@@ -25,27 +27,37 @@ const api = axios.create({
 // };
 
 // Dentro do seu componente Login ou onde você manipula o login
+// export const login = async (credentials) => {
+//   try {
+//     const response = await api.post('/auth/login', credentials);
+//     const { token, user } = response.data;
+
+//     if (token) {
+//       localStorage.setItem('token', token);
+//       localStorage.setItem('user', JSON.stringify(user));
+
+//       // Importante: configure o token no cabeçalho para solicitações futuras
+//       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+//       // Atualize o estado de usuário no contexto
+//       setUser(user);
+//     }
+
+//     // Navegue para a página inicial
+//     navigate('/');
+//   } catch (error) {
+//     console.error('Erro no login:', error);
+//     setError('Email ou senha inválidos');
+//   }
+// };
+
+// src/services/api.js - função login corrigida
 export const login = async (credentials) => {
   try {
     const response = await api.post('/auth/login', credentials);
-    const { token, user } = response.data;
-    
-    if (token) {
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      
-      // Importante: configure o token no cabeçalho para solicitações futuras
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
-      // Atualize o estado de usuário no contexto
-      setUser(user);
-    }
-    
-    // Navegue para a página inicial
-    navigate('/');
+    return response.data; // Retorne apenas os dados da resposta
   } catch (error) {
-    console.error('Erro no login:', error);
-    setError('Email ou senha inválidos');
+    throw error.response?.data || { message: 'Erro ao fazer login' };
   }
 };
 
@@ -149,18 +161,48 @@ export const deleteRecurso = async (id) => {
 //   return response.data;
 // };
 
+// export const getNotificacoes = async (params = {}) => {
+//   try {
+//     const queryParams = new URLSearchParams(params).toString();
+//     const url = queryParams ? `/notificacoes?${queryParams}` : '/notificacoes';
+//     const response = await api.get(url);
+//     console.log('Resposta da API de notificações:', response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Erro ao obter notificações:', error);
+//     throw error.response?.data || { message: 'Erro ao obter notificações' };
+//   }
+// };
+
+
+// Modifique a função getNotificacoes no seu arquivo api.js
 export const getNotificacoes = async (params = {}) => {
+  // Verifique se o token existe antes de fazer a requisição
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.log('Token não encontrado, pulando requisição de notificações');
+    return [];
+  }
+
   try {
     const queryParams = new URLSearchParams(params).toString();
     const url = queryParams ? `/notificacoes?${queryParams}` : '/notificacoes';
     const response = await api.get(url);
-    console.log('Resposta da API de notificações:', response.data);
     return response.data;
   } catch (error) {
-    console.error('Erro ao obter notificações:', error);
-    throw error.response?.data || { message: 'Erro ao obter notificações' };
+    // Não redirecione automaticamente em caso de erro 401
+    if (error.response && error.response.status === 401) {
+      console.error('Erro de autenticação ao obter notificações');
+      // Não faça nada aqui, deixe o componente lidar com isso
+    } else {
+      console.error('Erro ao obter notificações:', error);
+    }
+    throw error;
   }
 };
+
+// Cache para a última resposta
+let lastNotificacoesResponse = null;
 
 export const getStats = async () => {
   const response = await api.get('/stats');

@@ -1,13 +1,24 @@
 // src/components/NotificationBadge/index.jsx
-import React from 'react';
+import React, { memo } from 'react';
 import { Bell } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useNotificacoes } from '../../context/NotificacoesContext';
+import { useAuth } from '../../context/AuthContext'; // Importe o contexto de auth
 import styles from './styles.module.css';
 
-const NotificationBadge = () => {
-  const { naoLidas } = useNotificacoes();
-
+const NotificationBadge = memo(() => {
+  const { naoLidas, error } = useNotificacoes();
+  const { user } = useAuth(); // Verifique se o usuário está autenticado
+  
+  // Não mostre o badge se o usuário não estiver logado ou houver erro de autenticação
+  if (!user || error === 'Erro de autenticação') {
+    return (
+      <Link to="/notificacoes" className={styles.notification}>
+        <Bell size={20} />
+      </Link>
+    );
+  }
+  
   return (
     <Link to="/notificacoes" className={styles.notification}>
       <Bell size={20} />
@@ -18,6 +29,6 @@ const NotificationBadge = () => {
       )}
     </Link>
   );
-};
+});
 
 export default NotificationBadge;

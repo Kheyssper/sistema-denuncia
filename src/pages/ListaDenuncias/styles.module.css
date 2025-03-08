@@ -114,3 +114,110 @@
   color: #16a34a;
 }
 
+.container {
+  padding-bottom: 32px; /* Adicione espaço para a paginação */
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  color: #64748b;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(59, 130, 246, 0.2);
+  border-radius: 50%;
+  border-top-color: #3b82f6;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  color: #ef4444;
+  text-align: center;
+}
+
+.error p {
+  margin: 16px 0;
+}
+
+.retryButton {
+  padding: 8px 16px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.retryButton:hover {
+  background-color: #dc2626;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  color: #64748b;
+  text-align: center;
+}
+
+/* Estilos para os badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.pendente {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.emAnalise {
+  background-color: #e0e7ff;
+  color: #4f46e5;
+}
+
+.resolvida {
+  background-color: #d1fae5;
+  color: #059669;
+}
+
+.baixa {
+  background-color: #e0f2fe;
+  color: #0284c7;
+}
+
+.media {
+  background-color: #f3e8ff;
+  color: #7e22ce;
+}
+
+.alta {
+  background-color: #fee2e2;
+  color: #dc2626;
+}

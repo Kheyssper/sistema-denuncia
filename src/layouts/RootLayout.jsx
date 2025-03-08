@@ -1,15 +1,24 @@
 // RootLayout.jsx
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 import {
   LayoutDashboard, FileText, Eye, BookOpen,
-  LogOut, Settings, User
+  Bell, LogOut, Settings, User
 } from 'lucide-react'
 import styles from './RootLayout.module.css'
-import NotificationBadge from '../components/NotificationBadge'
+import { useAuth } from '../context/AuthContext' // Importe o hook useAuth
+import NotificationBadge from '../components/NotificationBadge' // Se estiver usando o componente de notificação
 
 const RootLayout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth(); // Obtenha a função logout do contexto
+
+  // Função para lidar com o clique no botão de logout
+  const handleLogout = () => {
+    logout(); // Chama a função logout do contexto
+    navigate('/login'); // Redireciona para a página de login
+  };
 
   return (
     <div className={styles.container}>
@@ -38,7 +47,10 @@ const RootLayout = () => {
         </nav>
 
         <div className={styles.logout}>
-          <button className={styles.logoutBtn}>
+          <button 
+            className={styles.logoutBtn}
+            onClick={handleLogout} // Adicione o event handler
+          >
             <LogOut size={20} />
             Sair
           </button>

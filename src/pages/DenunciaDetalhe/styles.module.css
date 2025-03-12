@@ -1,238 +1,333 @@
-/* src/pages/DenunciaAcompanhamento/styles.module.css */
+/* src/pages/DenunciaDetalhe/styles.module.css */
 .container {
   background: white;
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .header {
-  padding: 24px;
+  padding: 28px 32px;
   border-bottom: 1px solid #e2e8f0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: linear-gradient(to right, #f8fafc, #f1f5f9);
 }
 
 .header h1 {
-  font-size: 24px;
+  font-size: 26px;
   color: #1e293b;
-  margin-bottom: 4px;
+  font-weight: 600;
+  position: relative;
+}
+
+.header h1:after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #3b82f6;
+  margin-top: 8px;
+  border-radius: 2px;
 }
 
 .date {
   color: #64748b;
+  background: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 6px;
   font-size: 14px;
-}
-
-.headerActions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.exportButton {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #3b82f6;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.exportButton:hover {
-  background: #2563eb;
-}
-
-.exportButton svg {
-  color: white;
-}
-
-.statusBadge {
-  background: #f1f5f9;
-  color: #1e293b;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: 500;
+  border: 1px solid #e2e8f0;
 }
 
 .content {
-  padding: 24px;
-}
-
-.mainSection {
-  max-width: 800px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 28px;
+  padding: 32px;
+  background: #fcfcfd;
 }
 
 .infoCard {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 32px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
 }
 
-.infoHeader {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+.infoCard:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.infoCard h3 {
   color: #1e293b;
-}
-
-.infoRow {
+  font-size: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
 }
 
-.priority {
-  padding: 4px 12px;
-  border-radius: 20px;
+.infoCard h3:before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background: #3b82f6;
+  margin-right: 10px;
+  border-radius: 2px;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.infoGrid > div {
+  background: #f8fafc;
+  padding: 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.infoGrid > div:hover {
+  background: #f1f5f9;
+}
+
+.infoGrid label, .denuncianteInfo label {
+  color: #64748b;
   font-size: 14px;
+  display: block;
+  margin-bottom: 6px;
   font-weight: 500;
 }
 
-.alta { background: #fee2e2; color: #dc2626; }
-.media { background: #fef9c3; color: #ca8a04; }
-.baixa { background: #dcfce7; color: #16a34a; }
-
-.timeline {
-  margin: 32px 0;
+.infoGrid p {
+  color: #334155;
+  font-size: 16px;
+  font-weight: 500;
 }
 
-.timeline h3 {
-  margin-bottom: 24px;
-  color: #1e293b;
-  font-size: 18px;
-}
-
-.timelineItem {
+/* Estilos para a seção de denunciante */
+.denuncianteInfo {
   display: flex;
+  flex-direction: column;
   gap: 16px;
-  margin-bottom: 24px;
-  position: relative;
 }
 
-.timelineDot {
-  background: #e2e8f0;
-  width: 32px;
-  height: 32px;
+.infoItem {
+  padding: 14px;
+  margin-bottom: 8px;
+  background: #f8fafc;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.infoItem:hover {
+  background: #f1f5f9;
+}
+
+.infoItem:last-child {
+  margin-bottom: 0;
+}
+
+.infoItem label {
+  display: flex;
+  align-items: center;
+}
+
+.infoItem p {
+  color: #334155;
+  font-size: 15px;
+  margin-top: 4px;
+}
+
+/* Estilo para os textos de "Não informado" */
+.infoItem p:empty::after {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.infoItem p {
+  word-break: break-word;
+}
+
+.infoItem p[data-empty="true"] {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* Estilos para a descrição */
+.descricaoContent {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 3px solid #3b82f6;
+}
+
+/* Estilos para anexos */
+.anexosSection {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.anexosSection h4 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.anexosList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.anexoItem {
+  background: #e0f2fe;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.anexoItem span {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Loading spinner */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: #64748b;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3b82f6;
   border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error container */
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: #64748b;
+  text-align: center;
+  padding: 20px;
+}
+
+.errorContainer svg {
+  color: #ef4444;
+  margin-bottom: 16px;
+}
+
+/* Botão de contato */
+.actions {
+  margin-top: 16px;
+}
+
+.contactButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-}
-
-.timelineContent {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 16px;
-  flex: 1;
-}
-
-.timelineHeader {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
-.timelineDate {
-  color: #64748b;
-  font-size: 14px;
-}
-
-.timelineStatus {
-  color: #3b82f6;
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.profissionalInfo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.profissionalTipo {
-  color: #64748b;
-  font-size: 14px;
-  padding: 2px 8px;
-  background: #e2e8f0;
-  border-radius: 12px;
-}
-
-.timelineText {
-  color: #1e293b;
-  line-height: 1.5;
-}
-
-.commentBox {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 24px;
-}
-
-.commentBox h3 {
-  margin-bottom: 16px;
-  color: #1e293b;
-}
-
-.commentInput {
   width: 100%;
-  min-height: 120px;
-  padding: 12px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  resize: vertical;
-}
-
-.sendButton {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   background: #3b82f6;
   color: white;
-  padding: 12px 24px;
   border: none;
   border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s ease;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
 
-.sendButton:hover {
+.contactButton:hover {
   background: #2563eb;
 }
 
-.finalizeButton {
-  background-color: #11aa22;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-top: 20px;
-  margin-left: 40%;
-  border-radius: 8px;
+.contactButton svg {
+  margin-right: 8px;
 }
 
+/* Status com cores diferentes */
+.status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.statusAberto {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.statusEmAnalise {
+  background-color: #e0f2fe;
+  color: #075985;
+}
+
+.statusConcluido {
+  background-color: #e2e8f0;
+  color: #475569;
+}
+
+.statusUrgente {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Responsividade para mobile */
 @media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+  
   .header {
     flex-direction: column;
     align-items: flex-start;
   }
-
-  .headerActions {
-    margin-top: 16px;
-    width: 100%;
-    justify-content: space-between;
+  
+  .header h1 {
+    margin-bottom: 10px;
+  }
+  
+  .infoGrid {
+    grid-template-columns: 1fr;
   }
 }

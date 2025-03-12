@@ -1,13 +1,18 @@
 import styles from '../styles.module.css'
 import StatusBadge from './StatusBadge'
-import { Eye, Trash2, ClipboardCheck } from 'lucide-react'
+import { Eye, Trash2, ClipboardCheck, AlertCircle } from 'lucide-react'
 import { format, parseISO } from 'date-fns'
 
 const DenunciaTable = ({ denuncias, onView, onDelete, onAcompanhar }) => {
   // Verificar se denuncias é um array válido
   if (!Array.isArray(denuncias)) {
     console.error('denuncias não é um array:', denuncias);
-    return <div>Nenhuma denúncia encontrada</div>;
+    return (
+      <div className={styles.emptyState}>
+        <AlertCircle size={36} />
+        <p>Nenhuma denúncia encontrada</p>
+      </div>
+    );
   }
 
   return (
@@ -26,13 +31,16 @@ const DenunciaTable = ({ denuncias, onView, onDelete, onAcompanhar }) => {
         <tbody>
           {denuncias.length === 0 ? (
             <tr>
-              <td colSpan="6" style={{ textAlign: 'center' }}>
-                Nenhuma denúncia encontrada
+              <td colSpan="6" className={styles.emptyTableMessage}>
+                <div className={styles.emptyTableContent}>
+                  <AlertCircle size={24} />
+                  <span>Nenhuma denúncia encontrada</span>
+                </div>
               </td>
             </tr>
           ) : (
             denuncias.map(denuncia => (
-              <tr key={denuncia.id}>
+              <tr key={denuncia.id} className={styles.tableRow}>
                 <td>#{denuncia.id}</td>
                 <td>
                   {denuncia.created_at && typeof denuncia.created_at === 'string'

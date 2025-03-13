@@ -144,7 +144,7 @@ const DenunciaDetalhe = () => {
                   </svg>
                   Email
                 </label>
-                <p>{denuncia.denunciante?.email || 'Não informado'}</p>
+                <p>{denuncia?.email || 'Não informado'}</p>
               </div>
               <div className={styles.infoItem}>
                 <label>
@@ -153,15 +153,15 @@ const DenunciaDetalhe = () => {
                   </svg>
                   Telefone
                 </label>
-                <p>{denuncia.denunciante?.telefone || 'Não informado'}</p>
+                <p>{denuncia?.telefone || 'Não informado'}</p>
               </div>
-              <div className={styles.infoItem}>
+              {/* <div className={styles.infoItem}>
                 <label>
                   <MapPin size={16} style={{ marginRight: '6px' }} />
                   Local
                 </label>
-                <p>{denuncia.denunciante?.local || 'Não informado'}</p>
-              </div>
+                <p>{denuncia?.local || 'Não informado'}</p>
+              </div> */}
             </div>
           </InfoCard>
           

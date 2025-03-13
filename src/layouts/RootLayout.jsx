@@ -24,7 +24,7 @@ const RootLayout = () => {
     <div className={styles.container}>
       <aside className={styles.sidebar}>
         <div className={styles.logo}>
-          <h1>AMOR</h1>
+          <h1>Protege+</h1>
         </div>
 
         <nav className={styles.nav}>
@@ -59,7 +59,7 @@ const RootLayout = () => {
 
       <main className={styles.main}>
         <header className={styles.header}>
-          <h2>Dashboard</h2>
+          <h2></h2>
           <div className={styles.headerActions}>
             <div className={styles.headerIcon}>
               <NotificationBadge />

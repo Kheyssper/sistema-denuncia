@@ -13,7 +13,7 @@ const Sidebar = () => {
   return (
     <aside className="w-64 bg-white border-r h-screen fixed">
       <div className="p-4 border-b">
-        <h1 className="text-xl font-bold text-gray-800">+ AMOR</h1>
+        <h1 className="text-xl font-bold text-gray-800">+ Protege+</h1>
       </div>
       <nav className="p-4">
         {menuItems.map((item) => {

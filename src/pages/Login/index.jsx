@@ -41,7 +41,7 @@ const Login = () => {
     <div className={styles.container}>
       <div className={styles.formContainer}>
         <div className={styles.logoSection}>
-          <h1>AMOR</h1>
+          <h1>Protege+</h1>
           <p>Sistema de Denúncias e Apoio</p>
         </div>
 

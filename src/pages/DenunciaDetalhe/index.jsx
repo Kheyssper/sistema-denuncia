@@ -133,7 +133,7 @@ const DenunciaDetalhe = () => {
                   <User size={16} style={{ marginRight: '6px' }} />
                   Nome
                 </label>
-                <p>{denuncia.denunciante?.nome || 'Não informado'}</p>
+                <p>{denuncia.nome || 'Não informado'}</p>
               </div>
               <div className={styles.infoItem}>
                 <label>
